@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import { Task } from './Component/Task';
-import  Axios  from 'axios';
+import Axios from 'axios';
 
 
 function App() {
   const [todolist, setTodolist] = useState([])
   const [getText, setGetText] = useState("")
-  const [catFact,setCatFact] = useState("")
+  const [catFact, setCatFact] = useState("")
+  const [name, setName] = useState('')
+  const [age, setPredictAge] = useState({})
+
+
+
   const handleChange = (event) => {
     setGetText(event.target.value)
   }
@@ -34,21 +39,38 @@ function App() {
           return { ...task, completed: true }
         } else {
           return task
-        }   
+        }
       })
     )
   }
 
-  const fetchCatFact =() =>{
-    Axios.get('https://catfact.ninja/fact').then((resp)=>{
-    setCatFact(resp.data.fact)
-  }) 
+  const fetchCatFact = () => {
+    Axios.get('https://catfact.ninja/fact').then((resp) => {
+      setCatFact(resp.data.fact)
+    })
   }
-  useEffect(()=>{
-  fetchCatFact()
+  useEffect(() => {
+    fetchCatFact()
 
-  },[])
-  
+  }, [])
+
+  const getName = (event) => {
+    setName(event.target.value)
+  }
+
+  const predictAge = () => {
+    Axios.get(`https://api.agify.io/?name[]=${name}`).then((resp) => {
+      console.log(resp.data)
+      setPredictAge(resp.data)
+    })
+  }
+
+  useEffect(() => {
+    if (name) {
+      predictAge();
+    }
+  }, [name])
+
 
   return (
     <div className='App'>
@@ -65,10 +87,16 @@ function App() {
             completedTask={completedTask} />
         })}
       </div>
-        <div className='Cat'>
-          <button onClick={fetchCatFact}>Generate Cat Image</button>
-          <p>{catFact}</p>
-        </div>
+      <div className='Cat'>
+        <button onClick={fetchCatFact}>Generate Cat Image</button>
+        <p>{catFact}</p>
+      </div>
+      <input type='text' onChange={getName} />
+      <p>{name}</p>
+      <div className='predictAge'>
+        <button onClick={predictAge}>PredictAge</button>
+        <p>Age of {name} is {age? .Name}</p>
+      </div>
     </div>
   )
 }
