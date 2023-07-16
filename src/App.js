@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import { Task } from './Component/Task';
 import Axios from 'axios';
+import { Excuse } from './Component/Excuse';
 
 
 function App() {
@@ -61,7 +62,7 @@ function App() {
   const predictAge = () => {
     Axios.get(`https://api.agify.io/?name[]=${name}`).then((resp) => {
       console.log(resp.data)
-      setPredictAge(resp.data)
+      setPredictAge(resp.data[0])
     })
   }
 
@@ -95,8 +96,9 @@ function App() {
       <p>{name}</p>
       <div className='predictAge'>
         <button onClick={predictAge}>PredictAge</button>
-        <p>Age of {name} is {age? .Name}</p>
+        <p>Age of {name} is {age?.age}</p>
       </div>
+      < Excuse/>
     </div>
   )
 }
