@@ -7,6 +7,7 @@ import { Home } from './Component/Home';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Menu } from './Component/Menu';
 import { Link } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
 
 
 function App() {
@@ -107,11 +108,12 @@ function App() {
       <div className='routes'>
         <Router>
        
-        <Link to='/home'>Home</Link>
+        <Link to='/homepage'>Home</Link>
+        <Link to='/menu'>Menu</Link> 
 
       
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path='/menu' element={<Menu />} />
             <Route path='*' element={<h1> Error page not found</h1>} />
 
