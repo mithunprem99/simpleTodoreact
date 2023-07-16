@@ -3,6 +3,10 @@ import './App.css'
 import { Task } from './Component/Task';
 import Axios from 'axios';
 import { Excuse } from './Component/Excuse';
+import { Home } from './Component/Home';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Menu } from './Component/Menu';
+import { Link } from 'react-router-dom';
 
 
 function App() {
@@ -75,6 +79,7 @@ function App() {
 
   return (
     <div className='App'>
+     
       <div className='addTask'>
         <input type='text' onChange={handleChange}></input>
         <button onClick={addTask}>ADDTask</button>
@@ -98,8 +103,23 @@ function App() {
         <button onClick={predictAge}>PredictAge</button>
         <p>Age of {name} is {age?.age}</p>
       </div>
-      < Excuse/>
+      <Excuse />
+      <div className='routes'>
+        <Router>
+       
+        <Link to='/home'>Home</Link>
+
+      
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path='/menu' element={<Menu />} />
+            <Route path='*' element={<h1> Error page not found</h1>} />
+
+          </Routes>
+        </Router>
+      </div>
     </div>
+
   )
 }
 
