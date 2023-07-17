@@ -8,9 +8,12 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Menu } from './Component/Menu';
 import { Link } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
+import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
+
 
 
 function App() {
+  const client = new QueryClient();
   const [todolist, setTodolist] = useState([])
   const [getText, setGetText] = useState("")
   const [catFact, setCatFact] = useState("")
@@ -80,8 +83,8 @@ function App() {
 
   return (
     <div className='App'>
-     
-      <div className='addTask'>
+     <QueryClientProvider client={client}>
+            <div className='addTask'>
         <input type='text' onChange={handleChange}></input>
         <button onClick={addTask}>ADDTask</button>
       </div>
@@ -108,18 +111,20 @@ function App() {
       <div className='routes'>
         <Router>
        
-        <Link to='/homepage'>Home</Link>
+        <Link to='/home'>Home</Link>
         <Link to='/menu'>Menu</Link> 
 
       
           <Routes>
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/home" element={<Home />} />
             <Route path='/menu' element={<Menu />} />
             <Route path='*' element={<h1> Error page not found</h1>} />
 
           </Routes>
         </Router>
+        
       </div>
+      </QueryClientProvider>
     </div>
 
   )
