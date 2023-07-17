@@ -7,13 +7,20 @@ import { Home } from './Component/Home';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Menu } from './Component/Menu';
 import { Link } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
+
 import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
+import { Form } from './Component/Form';
 
 
 
 function App() {
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions:{
+      queries:{
+        refetchOnWindowFocus:true
+      }
+    }
+  });
   const [todolist, setTodolist] = useState([])
   const [getText, setGetText] = useState("")
   const [catFact, setCatFact] = useState("")
@@ -83,6 +90,7 @@ function App() {
 
   return (
     <div className='App'>
+      
      <QueryClientProvider client={client}>
             <div className='addTask'>
         <input type='text' onChange={handleChange}></input>
@@ -124,7 +132,9 @@ function App() {
         </Router>
         
       </div>
+      <Form />
       </QueryClientProvider>
+      
     </div>
 
   )
