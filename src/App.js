@@ -26,6 +26,7 @@ function App() {
   const [catFact, setCatFact] = useState("")
   const [name, setName] = useState('')
   const [age, setPredictAge] = useState({})
+  const [isVisible,setIsVisible] = useState(false)
 
 
 
@@ -134,7 +135,10 @@ function App() {
       </div>
       <Form />
       </QueryClientProvider>
-      
+      <button onClick={() =>setIsVisible((prev)=>!prev)}>
+        {isVisible ? "Hide":"show"}
+      </button>
+      {isVisible && <h1>Hidden text</h1>}
     </div>
 
   )
